@@ -3,7 +3,6 @@ const keys = require('./keys');
 const promisify = require('es6-promisify');
 const moment = require('moment');
 const Chance = require('chance');
-const ffmpeg = require('fluent-ffmpeg');
 const Twit = require('twit');
 const exec = require('child_process').execSync;
 
@@ -88,7 +87,8 @@ function concatVideos() {
   // -map "[v]" -map "[merged]" -c:v libx264 -q 1 -c:a aac -strict experimental jojo.mp4
   exec('ffmpeg -y -i scratch/freeze.mp4 -t 17 -i scratch/vid.mp4 -i roundabout.mp3 -filter_complex \
   "[1:0] [1:1] [0:0] [0:1] concat=n=2:v=1:a=1 [v] [a];\
-  [a][2:a] amerge=inputs=2 [merged];\
+  [a] volume=volume=0.6 [aq];\
+  [aq][2:a] amerge=inputs=2 [merged];\
   [v]scale=640:-1[scaled]" \
   -map "[scaled]" -map "[merged]" -c:v libx264 -pix_fmt yuv420p -q 1 \
   -c:a aac -vb 1024k -minrate 1024k -maxrate 1024k -bufsize 1024k -ar 44100 -ac 2 -strict experimental scratch/jojo.mp4');
@@ -172,6 +172,7 @@ function main() {
     .then(clean)
     .catch(err => {
       console.log(err);
+      clean();
     })
 
 }

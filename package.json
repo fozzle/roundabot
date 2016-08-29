@@ -11,9 +11,7 @@
   "dependencies": {
     "chance": "^1.0.4",
     "es6-promisify": "^4.1.0",
-    "fluent-ffmpeg": "^2.1.0",
     "moment": "^2.14.1",
-    "node-twitter-api": "^1.7.4",
     "twit": "^2.2.4",
     "youtube-api": "^2.0.2"
   }

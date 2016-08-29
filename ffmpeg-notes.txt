@@ -10,7 +10,7 @@ in filter declaration `enable='gte(t,3)' for example will start filter at 3 seco
 ffmpeg -i vid.mp4 -i roundabout.mp3 -filter_complex \
 "[0:v]colorchannelmixer=enable='gte(t,3)' : .393:.769:.189:0:.349:.686:.168:0:.272:.534:.131[mixed]" -map [mixed] -acodec copy output.mp4
 
-// Grab frame at -ss time
+// Grab frame at -ss time of 17 seconds
 ffmpeg -i vid.mp4 -ss 00:00:17 -vframes 1 frame.png
 
 // Sepia tone our frame and add to be continued before making it a movie!
@@ -21,7 +21,7 @@ ffmpeg -i frame.png -i tbc.png \
 // Turn frame into video, 5 secs long (-t)
 ffmpeg -f lavfi -i aevalsrc=0 -loop 1 -i sepia.png -t 5 -c:v libx264 -c:a aac -strict experimental freeze.mp4
 
-// Concat frame to original video at 16seconds, merge roundabout (timed with audio)
+// Concat frame to original video at 17seconds, merge roundabout (timed with audio)
 ffmpeg -i freeze.mp4 -t 17 -i vid.mp4 -i roundabout.mp3 -filter_complex \
 "[1:0] [1:1] [0:0] [0:1] concat=n=2:v=1:a=1 [v] [a];\
 [a][2:a] amerge=inputs=2 [merged]" \
@@ -30,4 +30,4 @@ ffmpeg -i freeze.mp4 -t 17 -i vid.mp4 -i roundabout.mp3 -filter_complex \
 
 using timeline editing seems to fuck with the way the filters work. so no dice.
 
-solution: make sepia toned image "video" from original, concat to proper place in original video, overlay audio?
+solution: make sepia toned image "video" from original, concat to proper place in original video, merge audio

@@ -1,4 +1,6 @@
 .DS_Store
 keys.js
 scratch/
-node_modules
+user_scratch/
+node_modules/
+database

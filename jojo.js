@@ -168,7 +168,7 @@ module.exports.concatVideos = (vidPath='scratch/vid.mp4', freezePath='scratch/fr
     const ffmpeg = `ffmpeg -y -i ${freezePath} -t 00:00:${time} -i ${vidPath} -i ${audioPath} -filter_complex \
     "[1:0] [1:1] [0:0] [0:1] concat=n=2:v=1:a=1 [v] [a];\
     [a] volume=volume=0.6 [aq];\
-    [aq][2:a] amerge=inputs=2 [merged];\
+    [aq][2:a] amix=inputs=2 [merged];\
     [v]scale=640:-1[scaled]" \
     -map "[scaled]" -map "[merged]" -c:v libx264 -pix_fmt yuv420p -q 1 \
     -c:a aac -vb 1024k -minrate 1024k -maxrate 1024k -bufsize 1024k -ar 44100 -ac 2 -strict experimental ${outPath}`;

@@ -20,15 +20,23 @@ function createJojobFromTweet(tweet) {
   const videoInfo = tweet.extended_entities.media[0].video_info;
 
   // No long videos, but also nothing too short...
-  if (videoInfo.duration_millis < 10 * 1000 || videoInfo.duration_millis > 60 * 1000) throw new Error(`@${tweet.user.screen_name} this video is too long.`);
+  if (videoInfo.duration_millis < 8 * 1000) {
+    throw new Error(`@${tweet.user.screen_name} this video duration is too short, at least 8s please.`);
+  } else if (videoInfo.duration_millis > 60 * 1000) {
+    throw new Error(`@${tweet.user.screen_name} this video duration is too long, under 1 minute please.`);
+  }
 
   // get mp4 video links
+  console.log(tweet.id_str, videoInfo.variants);
   const mp4s = videoInfo.variants.filter(video => video.content_type === 'video/mp4');
 
+  console.log(mp4s);
   // Find best quality
   var video = mp4s.reduce(function(prev, current) {
     return (prev.bitrate > current.bitrate) ? prev : current;
   });
+
+  console.log(video);
 
   // Try and parse out a valid timestamp
   const text = entities.decode(tweet.text);

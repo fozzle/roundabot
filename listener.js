@@ -100,9 +100,9 @@ function clean() {
 
 function processQueue() {
   if (lock) return;
-  lock = true;
   const video = queue.shift();
   if (!video) return;
+  lock = true;
 
   console.log(video);
   jojo.download(video.url, `user_scratch/${video.id}.mp4`)

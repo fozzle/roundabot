@@ -57,6 +57,18 @@ module.exports.findVideos = () => {
     });
 }
 
+module.exports.downloadYoutube = (videoId, path="vid.mp4") => {
+  return new Promise((resolve, reject) => {
+    const cmd = exec(`youtube-dl ${videoId} --recode-video mp4 -o scratch/${path}`, (err) => {
+      if (err) return reject(err);
+    });
+    cmd.on('close', code => {
+      if (!code) return resolve(`scratch/${path}`);
+      return reject(code);
+    });
+  });
+}
+
 module.exports.downloadYoutube = (videoId) => {
   exec(`youtube-dl ${videoId} --recode-video mp4 -o scratch/vid.mp4`);
     // .then(() => 'scratch/vid.mp4');

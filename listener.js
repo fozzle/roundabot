@@ -131,6 +131,6 @@ function processQueue() {
     });
 }
 
-setInterval(processQueue, 2000);
+setInterval(processQueue, 10000);
 setInterval(scanMentions, 60 * 1000 * 2);
 scanMentions();

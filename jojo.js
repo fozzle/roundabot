@@ -69,11 +69,6 @@ module.exports.downloadYoutube = (videoId, path="vid.mp4") => {
   });
 }
 
-module.exports.downloadYoutube = (videoId) => {
-  exec(`youtube-dl ${videoId} --recode-video mp4 -o scratch/vid.mp4`);
-    // .then(() => 'scratch/vid.mp4');
-}
-
 module.exports.download = (uri, destination) => {
   return new Promise(function(resolve, reject) {
     request.head(uri, function(err, res, body){

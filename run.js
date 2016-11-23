@@ -20,7 +20,7 @@ function main() {
       // Select random video
       const video = videos[Math.floor(Math.random() * videos.length)];
       // Youtube-dl to scratch folder as vid.mp4
-      return jojo.downloadVideo(video.id);
+      return jojo.downloadYoutube(video.id);
     })
     .then(path => {
       console.log(path);
